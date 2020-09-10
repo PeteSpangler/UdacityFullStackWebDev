@@ -1,6 +1,6 @@
 import psycopg2
 
-connection = psycopg2.connect('dbname=sandwich')
+connection = psycopg2.connect('dbname=sandwich user=postgres password=balto')
 
 cursor = connection.cursor()
 
@@ -22,6 +22,11 @@ data = {
   'completed': False
 }
 cursor.execute(SQL, data)
+
+cursor.execute('SELECT * from table2;')
+
+result = cursor.fetchall()
+print(result)
 
 connection.commit()
 
