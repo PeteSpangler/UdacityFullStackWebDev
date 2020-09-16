@@ -1,12 +1,13 @@
 #----------------------------------------------------------------------------#
 # Imports
 #----------------------------------------------------------------------------#
-
+from datetime import datetime
 import json
 import dateutil.parser
 import babel
 from flask import Flask, render_template, request, Response, flash, redirect, url_for
 from flask_moment import Moment
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
@@ -20,12 +21,23 @@ app = Flask(__name__)
 moment = Moment(app)
 app.config.from_object('config')
 db = SQLAlchemy(app)
-
-# TODO: connect to a local postgresql database
+migrate = Migrate(app,db)
+# Done: connect to a local postgresql database
 
 #----------------------------------------------------------------------------#
 # Models.
 #----------------------------------------------------------------------------#
+#Many to Many relationship (association table) for Shows
+class Shows(db.Model):
+    __tablename__ = 'Shows'
+
+    id = db.Column(db.Integer, primary_key=True)
+    artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'), nullable=False)
+    venue_id = db.Column(db.Integer, db.ForeignKey('Venue.id'), nullable=False)
+    start_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def __repr__(self):
+      return f'<Shows {self.id}>'
 
 class Venue(db.Model):
     __tablename__ = 'Venue'
@@ -38,8 +50,15 @@ class Venue(db.Model):
     phone = db.Column(db.String(120))
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
+    # Done: implement any missing fields, as a database migration using Flask-Migrate
+    genres = db.Column(db.ARRAY(db.String()))
+    seeking_talent = db.Column(db.Boolean(), default=False)
+    seeking_description = db.Column(db.String(300))
+    website_link = db.Column(db.String(500))
+    artists = db.relationship('Artist', secondary=Shows, backref=db.backref('Venue'))
 
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
+    def __repr__(self):
+      return f'<Venue {self.id}>'
 
 class Artist(db.Model):
     __tablename__ = 'Artist'
@@ -52,10 +71,15 @@ class Artist(db.Model):
     genres = db.Column(db.String(120))
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
+    # Done: implement any missing fields, as a database migration using Flask-Migrate
+    seeking_venue = db.Column(db.Boolean(), default=False)
+    seeking_description = db.Column(db.String(300))
+    website_link = db.Column(db.String(500))
+    venues = db.relationship('Venue', secondary=Shows, backref='Artist')
 
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
-
-# TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
+    def __repr__(self):
+      return f'<Artist {self.id}>'
+# Done Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
 
 #----------------------------------------------------------------------------#
 # Filters.
