@@ -51,17 +51,11 @@ def index():
 # Models.
 #----------------------------------------------------------------------------#
 #Many to Many relationship (association table) for Shows
-class Shows(db.Model):
-    __tablename__ = 'Shows'
-
-    id = db.Column(db.Integer, primary_key=True)
-    artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'), nullable=False)
-    venue_id = db.Column(db.Integer, db.ForeignKey('Venue.id'), nullable=False)
-    start_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    upcoming = db.Column(db.Boolean, nullable=False, default=True)
-
-    def __repr__(self):
-      return f'<Shows {self.id}>'
+Shows = db.Table("Shows",
+   db.Column("id", db.Integer, primary_key=True),
+   db.Column("artist_id", db.Integer, db.ForeignKey("Artist.id")),
+   db.Column("venue_id", db.Integer, db.ForeignKey("Venue.id")),
+   db.Column("start_time", db.DateTime, default=datetime.utcnow()))
 
 class Venue(db.Model):
     __tablename__ = 'Venue'
@@ -81,7 +75,7 @@ class Venue(db.Model):
     website_link = db.Column(db.String(500))
     upcoming_shows_count = db.Column(db.Integer, default=0)
     past_shows_count = db.Column(db.Integer, default=0)
-    artists = db.relationship('Artist', secondary=Shows, backref=db.backref('Venue'))
+    artists = db.relationship('Artist', secondary = 'Shows', backref=db.backref('Venue'))
 
     def __repr__(self):
       return f'<Venue {self.id}>'
@@ -103,7 +97,7 @@ class Artist(db.Model):
     website_link = db.Column(db.String(500))
     upcoming_shows_count = db.Column(db.Integer, default=0)
     past_shows_count = db.Column(db.Integer, default=0)
-    venues = db.relationship('Venue', secondary=Shows, backref='Artist')
+    venues = db.relationship('Venue', secondary = 'Shows', backref='Artist')
 
     def __repr__(self):
       return f'<Artist {self.id}>'
