@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask_wtf import Form, FlaskForm
-from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField
-from wtforms.validators import DataRequired, AnyOf, URL
+from wtforms import StringField, SelectField, BooleanField, SelectMultipleField, DateTimeField
+from wtforms.validators import DataRequired, AnyOf, URL, Optional
 
 class ShowForm(FlaskForm):
     artist_id = StringField(
@@ -83,10 +83,10 @@ class VenueForm(FlaskForm):
         'address', validators=[DataRequired()]
     )
     phone = StringField(
-        'phone'
+        'phone', validators=[Optional()]
     )
     image_link = StringField(
-        'image_link'
+        'image_link', validators=[Optional()]
     )
     genres = SelectMultipleField(
         # TODO implement enum restriction
@@ -114,7 +114,19 @@ class VenueForm(FlaskForm):
         ]
     )
     facebook_link = StringField(
-        'facebook_link', validators=[URL()]
+        'facebook_link', validators=[URL(), Optional()]
+    )
+    website = StringField(
+        'website', validators=[URL(), Optional()]
+    )
+    image_link = StringField(
+        'image_link', validators=[URL(), Optional()]
+    )
+    seeking_talent = BooleanField(
+        'seeking_talent'
+    )
+    seeking_description = StringField(
+        'seeking_description'
     )
 
 class ArtistForm(FlaskForm):
@@ -213,8 +225,18 @@ class ArtistForm(FlaskForm):
         ]
     )
     facebook_link = StringField(
-        # TODO implement enum restriction
-        'facebook_link', validators=[URL()]
+        'facebook_link', validators=[URL(), Optional()]
     )
-
-# TODO IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
+    website = StringField(
+        'website', validators=[URL(), Optional()]
+    )
+    image_link = StringField(
+        'image_link', validators=[URL(), Optional()]
+    )
+    seeking_venue = BooleanField(
+        'seeking_venue'
+    )
+    seeking_description = StringField(
+        'seeking_description'
+    )
+# Done IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
