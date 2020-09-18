@@ -1,9 +1,9 @@
 from datetime import datetime
-from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField
-from wtforms.validators import DataRequired, AnyOf, URL, Optional
+from flask_wtf import Form
+from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField
+from wtforms.validators import DataRequired, AnyOf, URL
 
-class ShowForm(FlaskForm):
+class ShowForm(Form):
     artist_id = StringField(
         'artist_id'
     )
@@ -16,7 +16,7 @@ class ShowForm(FlaskForm):
         default= datetime.today()
     )
 
-class VenueForm(FlaskForm):
+class VenueForm(Form):
     name = StringField(
         'name', validators=[DataRequired()]
     )
@@ -86,7 +86,7 @@ class VenueForm(FlaskForm):
         'phone'
     )
     image_link = StringField(
-        'image_link', validators=[Optional()]
+        'image_link'
     )
     genres = SelectMultipleField(
         # TODO implement enum restriction
@@ -113,20 +113,11 @@ class VenueForm(FlaskForm):
             ('Other', 'Other'),
         ]
     )
-    website = StringField(
-        'website', validators=[URL(), Optional()]
-    )
     facebook_link = StringField(
-        'facebook_link', validators=[URL(), Optional()]
-    )
-    seeking_talent = BooleanField(
-        'seeking_talent',
-    )
-    seeking_description = StringField(
-        'seeking_description', 
+        'facebook_link', validators=[URL()]
     )
 
-class ArtistForm(FlaskForm):
+class ArtistForm(Form):
     name = StringField(
         'name', validators=[DataRequired()]
     )
@@ -221,16 +212,9 @@ class ArtistForm(FlaskForm):
             ('Other', 'Other'),
         ]
     )
-    website = StringField(
-        'website', validators=[URL(), Optional()]
-    )
     facebook_link = StringField(
-        'facebook_link', validators=[URL(), Optional()]
+        # TODO implement enum restriction
+        'facebook_link', validators=[URL()]
     )
-    seeking_venue = BooleanField(
-        'seeking_venue',
-    )
-    seeking_description = StringField(
-        'seeking_description', 
-    )
+
 # TODO IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
