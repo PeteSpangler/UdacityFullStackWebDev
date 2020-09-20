@@ -158,7 +158,7 @@ def show_venue(venue_id):
 
   return render_template('pages/show_venue.html', venue=data)
 
-@app.route('/venues/<venue_id>', methods=['DELETE'])
+@app.route('/venues/<venue_id>/delete', methods=['DELETE'])
 def delete_venue(venue_id):
   # Done: Complete this endpoint for taking a venue_id, and using
   # SQLAlchemy ORM to delete a record. Handle cases where the session commit could fail.
@@ -238,7 +238,7 @@ def edit_venue(venue_id):
   form.seeking_talent.data = edit_venue.seeking_talent
   form.seeking_description.data = edit_venue.seeking_description
 
-  # TODO: populate form with values from venue with ID <venue_id>
+  # Done: populate form with values from venue with ID <venue_id>
   return render_template('forms/edit_venue.html', form=form, venue=edit_venue)
 
 @app.route('/venues/<int:venue_id>/edit', methods=['POST'])
@@ -429,10 +429,21 @@ def create_artist_submission():
 @app.route('/shows')
 def shows():
   # displays list of shows at /shows
-  # TODO: replace with real venues data.
+  # Done: replace with real venues data.
   #       num_shows should be aggregated based on number of upcoming shows per venue.
-  data = Shows.query.all()
-  
+  data = []
+  shows = db.session.query(Venue.name, Artist.name, Artist.image_link, Shows.venue_id, Shows.artist_id, Shows.start_time)\
+    .filter(Venue.id==Shows.venue_id, Artist.id==Shows.artist_id)
+  for show in shows:
+    show_dict = {
+      'venue_name': show[0],
+      'artist_name': show[1],
+      'artist_image_link': show[2],
+      'venue_id': show[3],
+      'artist_id': show[4],
+      'start_time': str(show[5])
+    }
+    data.append(show_dict)
   return render_template('pages/shows.html', shows=data)
 
 @app.route('/shows/create')
@@ -444,7 +455,7 @@ def create_shows():
 @app.route('/shows/create', methods=['POST'])
 def create_show_submission():
   # called to create new shows in the db, upon submitting new show listing form
-  # TODO: insert form data as a new Show record in the db, instead
+  # Done: insert form data as a new Show record in the db, instead
   error = False
   show = Shows()
   show.artist_id = request.form.get('artist_id')
