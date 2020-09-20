@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 3d0feaf4becc
+Revision ID: d269a17edbf6
 Revises: 
-Create Date: 2020-09-19 16:32:54.556780
+Create Date: 2020-09-20 13:21:36.668470
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3d0feaf4becc'
+revision = 'd269a17edbf6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -30,6 +30,8 @@ def upgrade():
     sa.Column('website', sa.String(length=120), nullable=True),
     sa.Column('seeking_venue', sa.Boolean(), nullable=True),
     sa.Column('seeking_description', sa.String(length=120), nullable=True),
+    sa.Column('upcoming_shows_count', sa.Integer(), nullable=True),
+    sa.Column('past_shows_count', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('Venue',
@@ -45,6 +47,8 @@ def upgrade():
     sa.Column('genres', sa.ARRAY(sa.String()), nullable=True),
     sa.Column('seeking_talent', sa.Boolean(), nullable=True),
     sa.Column('seeking_description', sa.String(length=120), nullable=True),
+    sa.Column('upcoming_shows_count', sa.Integer(), nullable=True),
+    sa.Column('past_shows_count', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('Shows',
