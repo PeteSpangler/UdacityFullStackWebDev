@@ -40,7 +40,9 @@
 		{% endif %}
 	</div>
 	<div class="col-sm-6">
-		<img src="{{ artist.image_link }}" alt="Venue Image" />
+		<img src="{{ artist.image_link }}" alt="Artist Image" />
+		<a href="/artists/{{artist.id}}/edit"><button class="btn btn-default btn-small">Edit Artist Information</button></a>
+		<a href="/artists/{{artist.id}}/delete"><button class="btn btn-default btn-small">Delete Artist</button></a>
 	</div>
 </div>
 <section>
