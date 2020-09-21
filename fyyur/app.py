@@ -138,12 +138,19 @@ def search_venues():
   search_term=request.form.get('search_term', '')
   venues = Venue.query.filter(Venue.name.ilike('%'+search_term+'%')).all()
   data = []
-  for x in venues:
-    x_dict = {
-      "id": x.id,
-      "name": x.name,
+  for venue in venues:
+    upcoming_shows = 0
+    shows = db.session.query(Shows).filter(Shows.venue_id == venue.id)
+    for show in shows:
+      if (show.start_time > datetime.now()):
+        upcoming_shows += 1
+    venue_dict = {
+      'id': venue.id,
+      'name': venue.name,
+      'upcoming_shows': upcoming_shows
     }
-    data.append(x_dict)
+    data.append(venue_dict)
+
   response={
     'count': len(venues),
     'data': data
@@ -154,7 +161,42 @@ def search_venues():
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # Done: replace with real venue data from the venues table, using venue_id
-  data = Venue.query.get(venue_id)
+  venue = Venue.query.get(venue_id)
+  shows = db.session.query(Shows).filter(Shows.venue_id == venue_id)
+  past_shows = []
+  upcoming_shows = []
+  for show in shows:
+    artist = db.session.query(Artist.name, Artist.image_link).filter(Artist.id == show.artist_id).one()
+    theshow = {
+      'artist_id': show.artist_id,
+      'artist_name': artist.name,
+      'artist_image_link': artist.image_link,
+      'start_time': str(show.start_time)
+      }
+
+    if (show.start_time < datetime.now()):
+      past_shows.append(theshow)
+    else:
+      upcoming_shows.append(theshow)
+
+  data = {
+      "id": venue.id,
+      "name": venue.name,
+      "genres": venue.genres,
+      "address": venue.address,
+      "city": venue.city,
+      "state": venue.state,
+      "phone": venue.phone,
+      "website": venue.website,
+      "facebook_link": venue.facebook_link,
+      "seeking_talent": venue.seeking_talent,
+      "seeking_description": venue.seeking_description,
+      "image_link": venue.image_link,
+      "past_shows": past_shows,
+      "upcoming_shows": upcoming_shows,
+      "past_shows_count": len(past_shows),
+      "upcoming_shows_count": len(upcoming_shows),
+  }
 
   return render_template('pages/show_venue.html', venue=data)
 
@@ -302,14 +344,19 @@ def search_artists():
   artists = Artist.query.filter(Artist.name.ilike('%'+search_term+'%')).all()
   data = []
   for artist in artists:
-    a_dict = {
+    upcoming_shows = 0
+    shows = db.session.query(Shows).filter(Shows.artist_id == artist.id)
+    for show in shows:
+      if (show.start_time > datetime.now()):
+        upcoming_shows += 1
+    artist_dict = {
       'id': artist.id,
       'name': artist.name,
-      'upcoming_shows': artist.upcoming_shows_count,
+      'upcoming_shows': upcoming_shows,
     }
-    data.append(a_dict)
+    data.append(artist_dict)
   response ={
-    'count': len(data),
+    'count': len(artists),
     'data': data
   }
 
@@ -319,7 +366,41 @@ def search_artists():
 def show_artist(artist_id):
   # shows the artist page with the given aritst_id
   # Done: replace with real artist data from the artists table, using artist_id
-  data = Artist.query.get(artist_id)
+  artist = Artist.query.get(artist_id)
+  shows = db.session.query(Shows).filter(Shows.artist_id == artist_id)
+  past_shows = []
+  upcoming_shows = []
+  for show in shows:
+    venue = db.session.query(Venue.name, Venue.image_link).filter(Venue.id == show.venue_id).one()
+    theshow = {
+      'venue_id': show.venue_id,
+      'venue_name': venue.name,
+      'venue_image_link': venue.image_link,
+      'start_time': str(show.start_time)
+      }
+
+    if (show.start_time < datetime.now()):
+      past_shows.append(theshow)
+    else:
+      upcoming_shows.append(theshow)
+
+  data = {
+      "id": artist.id,
+      "name": artist.name,
+      "genres": artist.genres,
+      "city": artist.city,
+      "state": artist.state,
+      "phone": artist.phone,
+      "website": artist.website,
+      "facebook_link": artist.facebook_link,
+      "seeking_venue": artist.seeking_venue,
+      "seeking_description": artist.seeking_description,
+      "image_link": artist.image_link,
+      "past_shows": past_shows,
+      "upcoming_shows": upcoming_shows,
+      "past_shows_count": len(past_shows),
+      "upcoming_shows_count": len(upcoming_shows),
+  }
 
   return render_template('pages/show_artist.html', artist=data)
 
@@ -430,7 +511,7 @@ def create_artist_submission():
 def shows():
   # displays list of shows at /shows
   # Done: replace with real venues data.
-  #       num_shows should be aggregated based on number of upcoming shows per venue.
+  # num_shows should be aggregated based on number of upcoming shows per venue.
   data = []
   shows = db.session.query(Venue.name, Artist.name, Artist.image_link, Shows.venue_id, Shows.artist_id, Shows.start_time)\
     .filter(Venue.id==Shows.venue_id, Artist.id==Shows.artist_id)
@@ -470,7 +551,6 @@ def create_show_submission():
     flash('Error! Show was not created.')
   finally:
     db.session.close()
-
   # on successful db insert, flash success
     flash('Show was successfully listed!')
   # Done: on unsuccessful db insert, flash an error instead.
