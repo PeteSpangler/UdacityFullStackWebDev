@@ -158,13 +158,13 @@ def show_venue(venue_id):
 
   return render_template('pages/show_venue.html', venue=data)
 
-@app.route('/venues/<venue_id>/delete', methods=['DELETE'])
+@app.route('/venues/<venue_id>', methods=['POST'])
 def delete_venue(venue_id):
   # Done: Complete this endpoint for taking a venue_id, and using
   # SQLAlchemy ORM to delete a record. Handle cases where the session commit could fail.
   error = False
-  v_id = request.form.get('venue_id')
-  to_delete = Venue.query.get(v_id)
+  v_id = db.session.query(Venue).filter_by(id=venue_id).one()
+  to_delete = v_id
   try:
     db.session.delete(to_delete)
     db.session.commit()

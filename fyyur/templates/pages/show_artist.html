@@ -8,9 +8,6 @@
 		</h1>
 		<p class="subtitle">
 			ID: {{ artist.id }}
-			<form method="post" action="/artists/{{artist.id}}">
-				<button type="submit" class="btn btn-danger btn-large">Delete Artist</button>
-			</form>
 		</p>
 		<div class="genres">
 			{% for genre in artist.genres %}
