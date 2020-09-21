@@ -8,14 +8,16 @@
 		</h1>
 		<p class="subtitle">
 			ID: {{ venue.id }}
-			<form method="post" action="/venues/{{venue.id}}">
-				<button type="submit" class="btn btn-danger btn-small">Delete venue</button>
-			</form>
 		</p>
 		<div class="genres">
 			{% for genre in venue.genres %}
 			<span class="genre">{{ genre }}</span>
 			{% endfor %}
+		</div>
+		<div>
+		<form method="post" action="/venues/{{venue.id}}">
+			<button type="submit" class="btn btn-danger btn-small">Delete venue</button>
+		</form>
 		</div>
 		<p>
 			<i class="fas fa-globe-americas"></i> {{ venue.city }}, {{ venue.state }}
