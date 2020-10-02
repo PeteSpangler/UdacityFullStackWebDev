@@ -8,6 +8,16 @@ from models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
 
+def get_paginated_questions(request, selection):
+  page = request.args.get('page', 1, type=int)
+  start = (page - 1) * QUESTIONS_PER_PAGE
+  end = start + QUESTIONS_PER_PAGE
+
+  questions = [question.format() for question in selection]
+  current_questions = questions[start:end]
+  
+  return current_questions
+
 def create_app(test_config=None):
   # create and configure the app
   app = Flask(__name__)
@@ -99,7 +109,7 @@ def create_app(test_config=None):
         'success': True,
       })
     except:
-      abort(404)
+      abort(422)
   '''
   @DONE?: 
   Create an endpoint to POST a new question, 
@@ -119,7 +129,7 @@ def create_app(test_config=None):
     category = data.get('category', '')
 
     if (question == '') or (answer == '') or (difficulty == '') or (category == ''):
-      abort(404)
+      abort(422)
 
     try:
       question = Question(
@@ -135,7 +145,7 @@ def create_app(test_config=None):
       })
 
     except Exception:
-      abort(404)
+      abort(422)
   '''
   @TODO?: 
   Create a POST endpoint to get questions based on a search term. 
@@ -151,7 +161,7 @@ def create_app(test_config=None):
     data = request.get_json()
     search_term = data.get('searchTerm', '')
     if search_term == '':
-      abort(404)
+      abort(422)
 
     try:
       questions = Question.query.filter(Question.question.ilike(f'%{search_term}%')).all()
@@ -182,7 +192,7 @@ def create_app(test_config=None):
     category = Category.query.filter_by(id=id).one_or_none()
 
     if (category is None):
-      abort(404)
+      abort(422)
 
     questions = Question.query.filter_by(category=id).all()
 
@@ -206,13 +216,69 @@ def create_app(test_config=None):
   one question at a time is displayed, the user is allowed to answer
   and shown whether they were correct or not. 
   '''
+  @app.route('/quizzes', methods=['POST'])
+  def play_quiz_question():
+    data = request.get_json()
+    previous_questions = data.get('previous_questions')
+    quiz_category = data.get('quiz_category')
 
+    if ((quiz_category is None) or (previous_questions is None)):
+      abort(400)
+
+    if (quiz_category['id'] == 0):
+      questions = Question.query.all()
+    else:
+      questions = Question.query.filter_by(category=quiz_category['id']).all()
+
+    def get_random_question():
+      return questions[random.randint(0, len(questions) - 1)]
+
+    next_question = get_random_question
+    found = True
+    while found:
+      if next_question.id in previous_questions:
+        next_question = get_random_question()
+      else:
+        found = False
+    return jsonify({
+      'success': True,
+      'question': next_question.format()
+    })
   '''
   @TODO: 
   Create error handlers for all expected errors 
   including 404 and 422. 
   '''
-  
-  return app
+  @app.errorhandler(400)
+  def bad_request(error):
+    return jsonify({
+      'success': False,
+      'error': 400,
+      'message': 'Bad request error'
+    }), 400
 
-    
+  @app.errorhandler(404)
+  def not_found(error):
+    return jsonify({
+      'success': False,
+      'error': 404,
+      'message': 'Resource not found'
+    }), 404
+
+  @app.errorhandler(500)
+  def internal_server_error(error):
+    return jsonify({
+      'success': False,
+      'error': 500,
+      'message': 'An error has occcured, please try again'
+    }), 500
+
+  @app.errorhandler(422)
+  def unprocessable_entity(error):
+    return jsonify({
+      'success': False,
+      'error': 422,
+      'message': 'Unprocessable entity'
+    }), 422
+
+  return app    

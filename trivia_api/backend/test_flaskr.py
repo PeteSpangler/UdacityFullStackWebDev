@@ -18,6 +18,14 @@ class TriviaTestCase(unittest.TestCase):
         self.database_path = "postgres://{}/{}".format('localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
+        #Sample question for testing:
+        self.question = {
+            'question': 'When did a NHL team from a Canadian city win the Stanley Cup?',
+            'answer': '1993, Montreal Canadiens',
+            'difficulty': '2',
+            'category': 6
+        }
+
         # binds the app to the current context
         with self.app.app_context():
             self.db = SQLAlchemy()
