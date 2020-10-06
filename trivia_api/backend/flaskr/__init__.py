@@ -29,7 +29,7 @@ def create_app(test_config=None):
     )
     response.headers.add(
       'Access-Control-Allow-Methods',
-      'GET, POST, DELETE'
+      'GET, POST, PUT, DELETE'
     )
     return response
 # Helper functions for paginating questions
