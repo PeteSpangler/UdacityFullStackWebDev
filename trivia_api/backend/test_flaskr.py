@@ -26,18 +26,19 @@ class TriviaTestCase(unittest.TestCase):
             self.db.create_all()
 
      #Sample question(s) for testing:
-        self.question = {
+        self.new_question = {
             'test question': 'When did a NHL team from a Canadian city win the Stanley Cup?',
             'answer': '1993, Montreal Canadiens',
             'difficulty': '2',
             'category': 6
         }
-        self.question2 = {
+        self.new_question2 = {
             'test_question2': '',
             'answer2': '',
             'difficulty': '',
             'category': ''
         }
+
     def tearDown(self):
         """Executed after reach test"""
         pass
@@ -51,48 +52,66 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['success'])
 
-    def test_get_paginated_questions(self):
+    def test_get_questions(self):
         res = self.client().get('/questions')
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['total_questions'] > 0)
+        self.assertTrue(data['success'])
+
 
     def test_delete_question(self):
-        res = self.client().delete('/questions/1')
+        res = self.client().delete(f'/questions/1')
+        data = json.loads(res.data)
+
         self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['success'])
 
     def test_create_question(self):
-        result = self.client().post('/questions', json=self.question)
-        data = json.loads(result.data)
+        res = self.client().post('/questions', json=self.new_question)
+        data = json.loads(res.data)
 
-        self.assertEqual(result.status_code, 200)
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['success'])
 
     def test_search_question(self):
-        request_data = { 'searchTerm': 'Stanley Cup'}
+        res = self.client().post('/questions/search', json={'search_term': 'NHL team from a Canadian city'})
+        data = json.loads(res.data)
 
-        response = self.client().post('/questions/search', json=request_data)
-        data = json.loads(response.data)
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['success'])
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(data['questions'], False)
-        self.assertEqual(data['total_questions'], 1)
+    def test_play_quiz(self):
+        new_quiz = {'previous_questions': [], 'quiz_category': {'type': 'Sports', 'id': 1}}
+        res = self.client().post('/quizzes', json=new_quiz)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['success'])
 
     #error handlers
     
-    def test_404_get_questions(self):
+    def test_405_get_questions(self):
         res = self.client().get('/questions?page=1993')
         data = json.loads(res.data)
         
-        self.assertEqual(res.status_code, 404)
+        self.assertEqual(res.status_code, 405)
+        self.assertFalse(data['success'])
+
+    def test_405_add_questions_to_category(self):
+        res = self.client().post('/categories/2/questions', json=self.new_question)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 405)
 
     def test_422_question_post(self):
-        res = self.client().post('/questions', json=self.question2)
+        res = self.client().post('/questions', json=self.new_question2)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
-        self.assertEqual(data['success'], False)
         
 # Make the tests conveniently executable
 if __name__ == "__main__":
