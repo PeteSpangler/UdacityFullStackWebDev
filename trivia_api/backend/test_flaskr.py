@@ -15,7 +15,7 @@ class TriviaTestCase(unittest.TestCase):
         self.app = create_app()
         self.client = self.app.test_client
         self.database_name = "trivia_test"
-        self.database_path = "postgresql://peter:postgres@/var/run/postgresql:5433/trivia"
+        self.database_path = "postgresql://peter:postgres@{}/{}".format("localhost:5432", self.database_name)
         setup_db(self.app, self.database_path)
 
         # binds the app to the current context
@@ -64,7 +64,7 @@ class TriviaTestCase(unittest.TestCase):
 
 
     def test_delete_question(self):
-        res = self.client().delete(f'/questions/1')
+        res = self.client().delete('/questions/1')
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
