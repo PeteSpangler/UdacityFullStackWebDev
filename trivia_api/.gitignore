@@ -2,6 +2,7 @@
 __pycache__
 env
 node_modules
+.vs
 
 # OS generated files #
 ######################

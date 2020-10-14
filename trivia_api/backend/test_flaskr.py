@@ -29,14 +29,14 @@ class TriviaTestCase(unittest.TestCase):
         self.new_question = {
             'question': '"When did a NHL team from a Canadian city win the Stanley Cup?"',
             'answer': '1993, Montreal Canadiens',
-            'difficulty': '2',
-            'category': 6
+            'category': 6,
+            'difficulty': 2
         }
         self.new_question2 = {
             'question': '',
             'answer': '',
-            'difficulty': '',
-            'category': ''
+            'category': '',
+            'difficulty': ''
         }
 
     def tearDown(self):
@@ -62,14 +62,14 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data['total_questions'] > 0)
 
     def test_get_questions_in_category(self):
-        res = self.client().get('/categories/1/questions')
+        res = self.client().get('/categories/1993/questions')
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['total_questions'] > 0)
+        self.assertEqual(res.status_code, 404)
+        self.assertFalse(data['success'])
 
     def test_delete_question(self):
-        res = self.client().delete('/questions/1')
+        res = self.client().delete('/questions/17')
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -79,6 +79,7 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['success'])
 
     def test_search_question(self):
         res = self.client().post('/questions/search', json={'search_term': 'NHL team from a Canadian city'})
@@ -86,9 +87,9 @@ class TriviaTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 200)
 
-    def test_play_quiz(self):
-        new_quiz = {'previous_questions': [], 'quiz_category': {'type': 'Sports', 'id': 1}}
-        res = self.client().post('/quizzes', json=new_quiz)
+    def test_get_quiz(self):
+        res = self.client().post('/quizzes', json={'previous_questions': [], \
+                                                   'quiz_category': {'id': '6', 'type': 'Sports'}})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
