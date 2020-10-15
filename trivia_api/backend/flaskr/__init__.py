@@ -162,6 +162,8 @@ def create_app(test_config=None):
         'total_questions': len(selection),
         'current_category': None,
       })
+# You can return an array of categories of the returned list of questions, instead of returning None in all cases.
+
 
     except:
       abort(404)
