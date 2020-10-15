@@ -94,13 +94,13 @@ class TriviaTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['question'])
-"""
-test_get_categories failure scenario
-test_get_questions failure scenario
-test_delete_question failure scenario
-test_search_question failure scenario
-test_get_quiz failure scenario
-"""
+    """
+    test_get_categories failure scenario
+    test_get_questions failure scenario
+    test_delete_question failure scenario
+    test_search_question failure scenario
+    test_get_quiz failure scenario
+    """
 
     #error handlers
     
