@@ -5,10 +5,10 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = 'petespangler.us.auth0.com'
+AUTH0_DOMAIN = 'petespangler.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'drinks'
-CLIENT_ID = 'dOlW1HZhlhGBG9YY98CC0a9tcFwOiFZ9'
+API_AUDIENCE = 'localhost:5000'
+CLIENT_ID = 'zcqHKh1q8H6YydYeJvQVxwo339X1ptoL'
 
 ## AuthError Exception
 '''

@@ -16,7 +16,7 @@ CORS(app)
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 '''
-# db_drop_and_create_all()
+#db_drop_and_create_all()
 
 ## ROUTES
 @app.route('/')
@@ -72,13 +72,13 @@ def get_drink_details(jwt):
 @requires_auth('post:drinks')
 def new_drink(jwt):
     data = request.get_json()
-    if 'title' and 'recipie' not in data:
+    if 'title' and 'recipe' not in data:
         abort(422)
 
     title = data['title']
     recipe_json = json.dumps(data['recipe'])
 
-    drink = Drink(title=title, recipe=recipie_json)
+    drink = Drink(title=title, recipe=recipe_json)
     drink.insert()
 
     return jsonify({
