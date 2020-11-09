@@ -2,8 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\backend",
-    "\\backend\\src"
+    "\\backend\\src",
+    "\\backend\\src\\auth",
+    "\\backend\\src\\database",
+    "\\frontend",
+    "\\frontend\\src",
+    "\\frontend\\src\\environments"
   ],
-  "SelectedNode": "\\backend\\udacity-fsnd-udaspicelatte.postman_collection.json",
+  "SelectedNode": "\\backend\\src\\api.py",
   "PreviewInSolutionExplorer": false
 }

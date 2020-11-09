@@ -2,6 +2,14 @@
  * ensure all variables on this page match your project
  */
 
+/*
+Sources I got help from:
+
+https://github.com/jungleBadger/udacity_coffee_shop/blob/master/troubleshooting/generate_token.md
+
+https://github.com/jungleBadger/udacity_coffee_shop/blob/master/troubleshooting/update_postman.md
+*/
+
 export const environment = {
   production: false,
   apiServerUrl: 'http://127.0.0.1:5000', // the running FLASK api server url

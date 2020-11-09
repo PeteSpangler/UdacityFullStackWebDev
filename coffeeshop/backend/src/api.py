@@ -11,6 +11,15 @@ app = Flask(__name__)
 setup_db(app)
 CORS(app)
 
+"""
+Sources I got help from:
+https://github.com/cmiyachi/Udacity-Coffee-Shop-App
+
+https://github.com/jungleBadger/udacity_coffee_shop/blob/master/troubleshooting/generate_token.md
+
+https://github.com/jungleBadger/udacity_coffee_shop/blob/master/troubleshooting/update_postman.md
+"""
+
 '''
 @TODO uncomment the following line to initialize the datbase
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH

@@ -5,6 +5,15 @@ from jose import jwt
 from urllib.request import urlopen
 
 
+"""
+Sources I got help from:
+https://github.com/cmiyachi/Udacity-Coffee-Shop-App
+
+https://github.com/jungleBadger/udacity_coffee_shop/blob/master/troubleshooting/generate_token.md
+
+https://github.com/jungleBadger/udacity_coffee_shop/blob/master/troubleshooting/update_postman.md
+"""
+
 AUTH0_DOMAIN = 'petespangler.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'localhost:5000'
