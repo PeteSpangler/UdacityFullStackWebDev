@@ -17,14 +17,14 @@ Parameters:
   GitSourceRepo:
     Type: String
     Description: GitHub source repository - must contain a Dockerfile and buildspec.yml in the base
-    Default: UdacityFullStackWebDev
+    Default: Flask_App_EKS
     MinLength: 1
     MaxLength: 100
     ConstraintDescription: You must enter a GitHub repository name
 
   GitBranch:
     Type: String
-    Default: project
+    Default: master
     Description: GitHub git repository branch - change triggers a new build
     MinLength: 1
     MaxLength: 100
@@ -48,7 +48,7 @@ Parameters:
 
   CodeBuildDockerImage:
     Type: String
-    Default: aws/codebuild/docker:17:09.0
+    Default: aws/codebuild/standard:4.0
     Description: AWS CodeBuild Docker optimized image
     MinLength: 3
     MaxLength: 100
