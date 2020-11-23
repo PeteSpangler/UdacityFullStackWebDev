@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\examples\\flask",
-    "\\examples\\hello"
+    ""
   ],
-  "SelectedNode": "\\buildspec.yml",
+  "SelectedNode": "\\.gitignore",
   "PreviewInSolutionExplorer": false
 }
