@@ -1,0 +1,534 @@
+{
+	"info": {
+		"_postman_id": "4f3145e0-1072-4470-9a9c-b5bbdb2e81b3",
+		"name": "Spangcapstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "fan",
+			"item": [
+				{
+					"name": "get short details of Skaters",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{fan_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/skaters",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"skaters"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "unexpected error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user?id=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": 85809589,\n \"message\": \"Ut dolore\"\n}"
+						},
+						{
+							"name": "Details about a user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user?id=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "x-next",
+									"value": "deserunt ex consect",
+									"description": {
+										"content": "A link to the next page of responses",
+										"type": "text/plain"
+									}
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": 16001878,\n \"name\": \"ea esse tempor\",\n \"tag\": \"ut ea\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get short details of the goalies",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{fan_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/goalies",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"goalies"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Fan",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{fan_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "21847135-bc6e-4c43-9e98-fda3fe84ae08",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "21439a65-6532-40a3-a66d-ff4385d72a50",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GM",
+			"item": [
+				{
+					"name": "Get Skaters long details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{GM_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/skaters/7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"skaters",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get goalies long details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{GM_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/goalies/4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"goalies",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Skater",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{GM_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jack Hughes\",\r\n    \"pos\": \"C\",\r\n    \"pts\": 31,\r\n    \"gls\": 12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/skaters",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"skaters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Goalie",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{GM_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Sergei Bobrovsky\",\r\n    \"gaa\": 0.900,\r\n    \"so\": 1,\r\n    \"w\": 23\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/goalies",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"goalies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Skater",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{GM_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Elias Petterssen\",\r\n    \"pos\": \"C\",\r\n    \"pts\": 66,\r\n    \"gls\": 27\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/skaters/4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"skaters",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Goalie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{GM_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Carey Price\",\r\n    \"gaa\": 0.909,\r\n    \"so\": 9,\r\n    \"w\": 27\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/goalies/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"goalies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Goalie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{GM_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/goalies/7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"goalies",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Skater",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{GM_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/skaters/21",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"skaters",
+								"21"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{GM_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "629d2b2a-4ff5-4842-8820-64392ab39098",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "dedd8cf9-fd08-41f7-8610-1a20c48b4286",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2521f71a-b457-498a-b855-beb3c7344e8f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "507c8ed3-f0b2-4ea4-b3dc-908576389b29",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "8822698b-ee8e-486d-b632-dbd2275c1d68",
+			"key": "baseUrl",
+			"value": "https://spangcapstone.herokuapp.com/"
+		},
+		{
+			"id": "c950b3b1-04f9-4316-97e9-3574f4166096",
+			"key": "fan_token",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InA5TWx1UkE0Z0hWendCc0g5U0I4eCJ9.eyJpc3MiOiJodHRwczovL3BldGVzcGFuZ2xlci51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWZiODY3N2FhMmQ3ZjMwMDZlNmRkMWUwIiwiYXVkIjoiaG9ja2V5c3RhdHMiLCJpYXQiOjE2MDYxNjc3MTUsImV4cCI6MTYwNjE3NDkxNSwiYXpwIjoiT1c5OGI0UXhhV2oxSXpXa0Vyd2lhYUdNdmFIVEw1Q2siLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDpnb2FsaWVzIiwiZ2V0OnNrYXRlcnMiXX0.sWL3vrS3h-6gPfo5PHVvvty6pwpWZh5Z5WPaTfT11y1c83gww-zlxYx8Fk96kY3AbQNYpDQ6d_PQn1QlPF7oGjMoPdj-kJa3hKafX2NE-gfRVIvt6j6MZ_45vzEbqmoRiseYAS4PcQvkNmqoND19fkKf50cNZRR-0jLnOd1mq7ynom4iJTf1v2HteNa-Ejx6y5Io7c53j9n_AJw2GKDDP2slwtoGQVKhhz42Of2GSrK98T1--wPaDMQBW4BRT4-QD31_XkQXoNHiTGGkWHAC7OyUM9CEovFfuWRp6hNkYEJWSYNZmUoAkezwC_OS_Icn-NgYva0Gi0D_KgvF6gCqdg"
+		},
+		{
+			"id": "fcb38964-c571-4738-a6db-0acab95b1b52",
+			"key": "GM_token",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InA5TWx1UkE0Z0hWendCc0g5U0I4eCJ9.eyJpc3MiOiJodHRwczovL3BldGVzcGFuZ2xlci51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWZiODZhYWNiMjk0YmUwMDY5YTAwNjE1IiwiYXVkIjoiaG9ja2V5c3RhdHMiLCJpYXQiOjE2MDYxNjcwMDAsImV4cCI6MTYwNjE3NDIwMCwiYXpwIjoiT1c5OGI0UXhhV2oxSXpXa0Vyd2lhYUdNdmFIVEw1Q2siLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTpnb2FsaWUiLCJkZWxldGU6c2thdGVyIiwiZ2V0OmdvYWxpZXMiLCJnZXQ6Z29hbGllcy1pbmZvIiwiZ2V0OnNrYXRlcnMiLCJnZXQ6c2thdGVycy1pbmZvIiwicGF0Y2g6Z29hbGllIiwicGF0Y2g6c2thdGVyIiwicG9zdDpnb2FsaWVzIiwicG9zdDpza2F0ZXIiXX0.10jVS2Fe-0-wcaY2axHdvCm1vhoi5cTWWC66_LzwwExWCZir15q8Z3iMYnVC1Gb3AhJ9RfLf0T9pUZVX2Uyuc5NWfPjmgr-EpFB-Wd5IgibfD9B3ipK-lP9aPUX4K1XiHSa3oAviRCDriz7xVfrpuedtSTrWX1yNW4fJkDwvJhVAIG_dAjeyCotASdJJPEWNTVrJALRqesHxbwXauGvqzuKOK5erGUDAnqWe_MqH-PSg275krQ426VOWWi-4NLdXIGPxbGYo12nUJy-00kXBq7r2kE4_8vrcYICHMtBK1bOLagjZuw4ERtpPFjJwsRl6OAtBcv-ruHm8pLWJsxO9OA"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
