@@ -1,5 +1,5 @@
 # FSND_Capstone.PS
-##Final project for Udacity Full Stack Web Dev Nanodegree
+## Final project for Udacity Full Stack Web Dev Nanodegree
 The motivation for this project was to practice the skills and demonstrate knowledge of the material presented in the course.
 This app allows to record simple stats for hockey players, both Skaters and Goalies. There are two roles:
 Fan, which allows to only see which Skaters and Goalies are in the database and
@@ -18,7 +18,7 @@ The relational database platform used in this API
 -[Heroku]
 The cloud platform this API has been deployed on.
 
-##Getting Started:
+# Getting Started:
 
 ### Python 3.7 (Virtual Environment)
 
@@ -34,7 +34,7 @@ pip install -r requirements.txt
 Set the necessary environment variables:
 These can be found within the setup.sh file.
 
-###Running Local Tests
+### Running Local Tests
 First, a database must be created to restore the sql database provided.
 ```bash
 createdb capstone
@@ -51,12 +51,12 @@ flask run --reload
 python test.py
 ```
 
-##API Reference
+## API Reference
 The application is hosted on Heroku, so testing can easily be accomplished through Postman. A postman collection 
 can be found within this repository. If you are testing this API shortly after it has been uploaded for review,
 the JWT tokens within the repository should still be active. Otherwise, follow the steps below to generate fresh JWT tokens.
 
-##Authentication:
+## Authentication:
 Authentication for this API is done with the assistance of AUTH0 and can be done using a Google Account
 or with an email address and password. I have gone ahead and registered two users for this app,
 one with the Fan level of access and the other with the all-seeing GM level of access.
@@ -98,7 +98,7 @@ patch:goalie	edit goalie details
 
 delete:goalie	remove goalie from database
 
-###Models
+### Models
 There are two models:
 *Skaters
     *Name
@@ -111,7 +111,7 @@ There are two models:
     *Shutouts(so)
     *Wins(w)
 
-###Error Handling
+### Error Handling
 Errors are returned as JSON in the following format:
 ```json
 {
@@ -141,7 +141,7 @@ The following error types will be returned when requests fail:
 11. DELETE '/skaters/int:id' (delete skater at given id)
 12. DELETE '/goalies/int:id' (delete skater at given id)
 
-##Endpoint Responses
+## Endpoint Responses
 ```json
 1. {
             'success': True,
@@ -327,6 +327,6 @@ The following error types will be returned when requests fail:
 
 ```
 
-#Acknowledgements
+# Acknowledgements
 -Udacity Knowledge Team, specifically JungleBadger
 -https://github.com/the-geekiest-nerd
